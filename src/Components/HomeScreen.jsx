@@ -11,28 +11,30 @@ import InfoBox from "./InfoBox";
 import Table from "./Table";
 import { sortData, prettyPrintStat } from "../utils";
 import LineGraph from "./Linegraph";
-import Map from "./Map";
-import "leaflet/dist/leaflet.css";
+// import Map from "./Map";
+import Vaccination from "./Vaccination";
 
 function HomeScreen() {
   const [stateData, setStateData] = useState([]);
   const [states, setStates] = useState("Total");
   const [stateInfo, setStateInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({
-    lat: 20.5937,
-    lng: 78.9629,
-  });
-  const [mapZoom, setMapZoom] = useState(3);
-  const [mapStates, setMapStates] = useState([]);
+  // const [mapCenter, setMapCenter] = useState({
+  //   lat: 20.5937,
+  //   lng: 78.9629,
+  // });
+  // const [mapZoom, setMapZoom] = useState(3);
+  // const [mapStates, setMapStates] = useState([]);
   const [timeSeries, setTimeSerise] = useState();
-
+  console.log(timeSeries);
   useEffect(() => {
     fetch("https://api.covid19india.org/data.json")
       .then((response) => response.json())
       .then((data) => {
-        setStateInfo(data.statewise[0]);
-      });
+        // setStateInfo(data.statewise[0]);
+        console.log(data);
+      })
+      .catch((err) => console.log(err.message));
   }, []);
 
   const handleStateChange = async (event) => {
@@ -65,7 +67,6 @@ function HomeScreen() {
           setTimeSerise(data.cases_time_series);
           const sortedData = sortData(data.statewise);
           setTableData(sortedData);
-          setMapStates(data.statewise);
           setStateData(states);
         });
     };
@@ -111,7 +112,10 @@ function HomeScreen() {
             total={prettyPrintStat(stateInfo.deaths)}
           />
         </div>
-        <Map states={mapStates} center={mapCenter} zoom={mapZoom} />
+        {/* <Map states={mapStates} center={mapCenter} zoom={mapZoom} /> */}
+        <div>
+          <Vaccination />
+        </div>
       </div>
       <Card className="app__right">
         <CardContent>

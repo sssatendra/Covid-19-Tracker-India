@@ -1,6 +1,5 @@
-import React from "react";
+
 import numeral from "numeral";
-import { Cricle, Popup } from 'react-leaflet';
 
 
 export const sortData = (data) => {
